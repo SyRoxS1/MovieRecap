@@ -35,7 +35,7 @@ def LongestWatch():
     TotalTimeAll = round((Total/60),1)
     return Longest
     
-def LongestWatch():
+def AllTime():
     Total = 0 
     Longest = 0
     for EnumerationOfTime in Runtime:
@@ -98,6 +98,5 @@ def MostWatchedDirector():
 
 
 
-
-MostWatchedDirector() 
+print(AllTime())
         
