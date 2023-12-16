@@ -70,13 +70,6 @@ def SearchGender():
         print("Number of the movie type :", count)
 
 
-def ListAllFilms():
-    with open("WATCHLIST.csv", mode="r", encoding="utf8") as OpenFile:
-        FileContent = csv.reader(OpenFile)
-        next(FileContent)  # Supprime la première ligne car pas de films présents dessus
-        with open("AllFilms.txt", mode="w", encoding="utf8") as AllFilms:
-            for row in FileContent:
-                AllFilms.write(row[5]+"\n")
 
 def MostWatchedDirector():
     UniqueDirectors = set(Directors)
