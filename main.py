@@ -16,12 +16,13 @@ with open("WATCHLIST.csv", mode="r", encoding="utf8") as OpenFile:
     next(FileContent)  # Supprime la première ligne car pas de films présents dessus
     
     for row in FileContent:
-        Genres.append(row[11])
-        DateOfInsertInList.append(row[3])
-        Rating.append(row[8])
-        ReleaseDate.append(row[13])
-        Runtime.append(row[9])
-        Directors.append(row[14])
+        if row[3][:4] == '2023': #only get data from movies watched in 2023
+            Genres.append(row[11])
+            DateOfInsertInList.append(row[3])
+            Rating.append(row[8])
+            ReleaseDate.append(row[13])
+            Runtime.append(row[9])
+            Directors.append(row[14])
         
 
 def LongestWatch():
@@ -83,7 +84,7 @@ def MostWatchedDirector():
         val = PercentDirector[Director] = round(Directors.count(Director)/len(Directors)*100,2)
         PercentDirector.update({Director: val})
     count = 0 
-    
+
     for Data in sorted(PercentDirector, key=PercentDirector.get, reverse=True):
         print(Data, PercentDirector[Data])
         count += 1
