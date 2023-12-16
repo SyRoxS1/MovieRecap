@@ -8,6 +8,7 @@ ReleaseDate = [] #13
 Genres = []
 Runtime = [] #9
 Directors = []
+Movies = []
 count = 0
 GenderToSearch = "Horror"
 
@@ -17,13 +18,14 @@ with open("WATCHLIST.csv", mode="r", encoding="utf8") as OpenFile:
     
     for row in FileContent:
         if row[3][:4] == '2023': #only get data from movies watched in 2023
+            Movies.append(row[5])
             Genres.append(row[11])
             DateOfInsertInList.append(row[3])
             Rating.append(row[8])
             ReleaseDate.append(row[13])
             Runtime.append(row[9])
             Directors.append(row[14])
-        
+
 
 def LongestWatch():
     Total = 0 
@@ -67,6 +69,7 @@ def SearchGender():
                 count = count + 1
         print("Number of the movie type :", count)
 
+
 def ListAllFilms():
     with open("WATCHLIST.csv", mode="r", encoding="utf8") as OpenFile:
         FileContent = csv.reader(OpenFile)
@@ -83,20 +86,25 @@ def MostWatchedDirector():
 
         val = PercentDirector[Director] = round(Directors.count(Director)/len(Directors)*100,2)
         PercentDirector.update({Director: val})
-    count = 0 
-
+    return PercentDirector
+    
+def TopDirectors(PercentDirector):
+    count = 0
+    Top = []
     for Data in sorted(PercentDirector, key=PercentDirector.get, reverse=True):
-        print(Data, PercentDirector[Data])
+        Top.append((Data, PercentDirector[Data]))
         count += 1
         if count == 3:
             break
+    return Top
+#regler probleme None
+
+
 
     
 
-
-    
-
-
-
-print(AllTime())
-        
+TotalWatchTime = AllTime()
+LongestWatchedTime = LongestWatch()
+LongestWatchedMovie = Movies[Runtime.index(str(LongestWatchedTime))]
+DataGenders = StatGENDER()
+Top3Directors = TopDirectors(MostWatchedDirector())
