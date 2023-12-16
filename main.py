@@ -3,10 +3,10 @@ import csv
 from collections import defaultdict
 
 DateOfInsertInList = []
-Rating = [] #8
-ReleaseDate = [] #13
+Rating = [] 
+ReleaseDates = [] 
 Genres = []
-Runtime = [] #9
+Runtime = [] 
 Directors = []
 Movies = []
 count = 0
@@ -22,7 +22,7 @@ with open("WATCHLIST.csv", mode="r", encoding="utf8") as OpenFile:
             Genres.append(row[11])
             DateOfInsertInList.append(row[3])
             Rating.append(row[8])
-            ReleaseDate.append(row[13])
+            ReleaseDates.append(row[13])
             Runtime.append(row[9])
             Directors.append(row[14])
 
@@ -48,15 +48,30 @@ def AllTime():
 
 def StatGENDER(): #Return percentgenders with all genders with the percentage of how much it is present in the whole list
     GenderSeparated = []
-    AllDifferentGenders = []
-    for EnumerationOfGenres in Genres: 
+    for EnumerationOfGenres in Genres:
         GenderSeparated = GenderSeparated + EnumerationOfGenres.split(",")
     AllDifferentGenders = set(GenderSeparated)
     
-    for Genders in AllDifferentGenders:
-        PercentGenders = {}
-        PercentGenders[Genders] = round(GenderSeparated.count(Genders)/len(GenderSeparated)*100,2)
+    PercentGenders = {}
+
+    for Gender in AllDifferentGenders:
+        val = round(Genres.count(Gender)/len(Genres)*100,2)
+        PercentGenders.update({Gender: val})
     return PercentGenders
+
+
+def TopGenders(PercentGenders):
+    count = 0
+    Top = []
+    for Data in sorted(PercentGenders, key=PercentGenders.get, reverse=True):
+        Top.append((Data, PercentGenders[Data]))
+        count += 1
+        if count == 3:
+            break
+    return Top
+
+
+
 
 def SearchGender():
     with open("WATCHLIST.csv", mode="r", encoding="utf8") as OpenFile:
@@ -76,11 +91,13 @@ def MostWatchedDirector():
     PercentDirector = {}
     
     for Director in UniqueDirectors:
-
-        val = PercentDirector[Director] = round(Directors.count(Director)/len(Directors)*100,2)
+        val = round(Directors.count(Director)/len(Directors)*100,2)
         PercentDirector.update({Director: val})
     return PercentDirector
     
+
+
+
 def TopDirectors(PercentDirector):
     count = 0
     Top = []
@@ -90,14 +107,42 @@ def TopDirectors(PercentDirector):
         if count == 3:
             break
     return Top
-#regler probleme None
+
+
+def ReleaseDateStats():
+    years = []
+    yearWithData = {}
+    for SingleRelease in ReleaseDates:
+        years.append(SingleRelease[:4])
+
+    singleYear = set(years)
+
+
+    for Year in singleYear:
+        yearWithData.update({Year: years.count(Year)})
+        
+    return yearWithData
+
+def topReleaseDate(yearWithData):
+    Top = []
+    count = 0
+    for Data in sorted(yearWithData, key=yearWithData.get, reverse=True):
+        Top.append((Data, yearWithData[Data]))
+        count += 1
+        if count == 3:
+            break
+    return Top
 
 
 
     
 
-TotalWatchTime = AllTime()
+TotalWatchTime = AllTime() #Renvoie temps en heures
 LongestWatchedTime = LongestWatch()
 LongestWatchedMovie = Movies[Runtime.index(str(LongestWatchedTime))]
 DataGenders = StatGENDER()
 Top3Directors = TopDirectors(MostWatchedDirector())
+Top3Genders = TopGenders(StatGENDER())
+topReleaseDateData = topReleaseDate(ReleaseDateStats())
+
+print(topReleaseDateData)
