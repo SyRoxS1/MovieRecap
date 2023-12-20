@@ -7,11 +7,8 @@ from main import AllTime, LongestWatch, StatGENDER, TopDirectors, TopGenders, to
 app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
-    Movies = MoviesF()
-    Runtime = RuntimeF()
-    TotalWatchTime = AllTime() #Renvoie temps en heures
-    LongestWatchedTime = LongestWatch()
-    LongestWatchedMovie = Movies[Runtime.index(str(LongestWatchedTime))]
+    
+    
     DataGenders = StatGENDER()
     Top3Directors = TopDirectors(MostWatchedDirector())
     Top3Genders = TopGenders(StatGENDER())
@@ -19,6 +16,22 @@ def index():
     Nbfilms = NbFilmVu()
     
     return render_template('index.html',DATA=Nbfilms,)
+
+@app.route('/nextpage.html', methods=['GET'])
+def index2():
+    TotalWatchTime = AllTime() #Renvoie temps en heures
+    return render_template('index2.html',DATA=str(TotalWatchTime) +"H")
+
+@app.route('/nextpage1.html', methods=['GET'])
+def index3():
+    Movies = MoviesF()
+    Runtime = RuntimeF()
+    LongestWatchedTime = LongestWatch()
+    LongestWatchedMovie = Movies[Runtime.index(str(LongestWatchedTime))]
+    return render_template('index3.html',DATA=LongestWatchedMovie)
+
+
+
 
 
 

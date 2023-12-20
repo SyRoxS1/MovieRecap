@@ -1,13 +1,46 @@
 body {
-    background-image: url('src/img1.png'); /* Replace 'path/to/your/image.jpg' with the actual path to your image file */
-    background-size: cover; /* This ensures that the background image covers the entire viewport */
-    background-repeat: no-repeat; /* This prevents the background image from repeating */
-    background-attachment: fixed; /* This fixes the background image, so it doesn't scroll with the content */
+    
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    width: 100vw;
+    overflow: hidden;
 }
 
 p {
+    
+    font-size: 10em;
+}
+
+
+
+.button {
     position: relative;
+    left: 1300px;
+    top: 100px;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    background-color: #8400ff;
+    color: #ffffff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #2980b9;
+}
+
+.slide-elem {
+    position: relative;
+    transform-origin: 0%;
     left: 800px;
     top: 300px;
-    font-size: 10em;
+    transform: rotate(0deg); /* Initial rotation angle */
+    transition: transform 1s ease; /* Use the transform property for transition */
+}
+
+.slide-elem.triggered {
+    transform: rotate(720deg);
 }

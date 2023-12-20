@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/styles.css') }}">
+    <head>
+        <title>incroyable</title>
+    </head>
+<body>
+
+<div class="slide-elem">
+    <p>
+        {% if DATA %}
+            {{ DATA }}
+        {% endif %}
+    </p>
+</div>
+<style>
+    body {
+        background-image: url("{{ url_for('static',filename='styles/src/img2.png') }}"); 
+    }
+    
+</style>
+<a href="nextpage1.html" class="button">Voir le film de plus long</a>
+<script src="{{ url_for('static',filename='styles/script.js') }}"></script> 
+</body>
+</html>
