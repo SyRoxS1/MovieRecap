@@ -27,7 +27,7 @@ with open("WATCHLIST.csv", mode="r", encoding="utf8") as OpenFile:
             Directors.append(row[14])
 
 
-def LongestWatch():
+def LongestWatch(): 
     Total = 0 
     Longest = 0
     for EnumerationOfTime in Runtime:
@@ -133,9 +133,14 @@ def topReleaseDate(yearWithData):
             break
     return Top
 
+def NbFilmVu():
+    return len(Movies) # :D
 
+def MoviesF():
+    return Movies #kappa
 
-    
+def RuntimeF():
+    return Runtime
 
 TotalWatchTime = AllTime() #Renvoie temps en heures
 LongestWatchedTime = LongestWatch()

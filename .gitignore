@@ -2,3 +2,4 @@
 .~lock*
 *.txt
 test.py
+*.pyc
