@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/styles.css') }}">
-    <head>
-        <title>incroyable</title>
-    </head>
-<body>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static',filename='styles/styles.css') }}" />
+  <link rel="stylesheet" href="style.css" />
+  <head>
+    <title>incroyable</title>
+  </head>
+  <body>
+    <div class="titleimg">
+      <img src="{{ url_for('static',filename='styles/src/title.png') }}" alt="title">
+    </div>
+    <div class="container">
+      <div class="slide-elem">
+        <p class="DATA">{% if DATA %} {{ DATA }} {% endif %}</p>
+      </div>
 
-<div class="slide-elem">
-    <p>
-        {% if DATA %}
-            {{ DATA }}
-        {% endif %}
-    </p>
-</div>
-<style>
-    body {
-        background-image: url("{{ url_for('static',filename='styles/src/img1.png') }}"); 
-    }
-    
-</style>
+      <a href="nextpage.html" class="button">
+        Voir le temps passé sur ces films
+      </a>
+    </div>
 
-<div class="container">
-    <a href="nextpage.html" class="button">Voir le temps passé sur ces films</a>
-</div>
-
-<script src="{{ url_for('static',filename='styles/script.js') }}"></script> 
-</body>
+    <script src="{{ url_for('static',filename='styles/script.js') }}"></script>
+  </body>
 </html>
