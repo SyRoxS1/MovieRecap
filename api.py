@@ -30,7 +30,15 @@ def index3():
     LongestWatchedMovie = Movies[Runtime.index(str(LongestWatchedTime))]
     return render_template('index3.html',DATA=LongestWatchedMovie)
 
+@app.route('/nextpage2.html', methods=['GET'])
+def index4():
+    LongestWatchedTime = LongestWatch()
+    return render_template('index4.html',DATA=str(LongestWatchedTime) +" minutes !!")
 
+@app.route('/nextpage3.html', methods=['GET'])
+def index5():
+    
+    return render_template('index5.html',DATA=)
 
 
 
