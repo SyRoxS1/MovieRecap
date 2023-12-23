@@ -49,18 +49,30 @@ def index5():
     match = re.search(pattern, Top1)
     extracted_text = match.group(1)
     Top1Gender = extracted_text
-    PercentOfGender = Top1[Top1.index(",") +1:]
+    PercentOfGender1 = Top1[Top1.index(",") +1:]
 
 
 
     Top2 = Top3Genders[1]
     Top2 = str(Top2)
+    Top2 = Top2.replace("(","")
+    Top2 = Top2.replace(")","")
+    match = re.search(pattern, Top2)
+    extracted_text = match.group(1)
+    Top2Gender = extracted_text
+    PercentOfGender2 = Top2[Top2.index(",") +1:]
 
     Top3 = Top3Genders[2]
-    Top2 = str(Top2)
+    Top3 = str(Top3)
+    Top3 = Top3.replace("(","")
+    Top3 = Top3.replace(")","")
+    match = re.search(pattern, Top3)
+    extracted_text = match.group(1)
+    Top3Gender = extracted_text
+    PercentOfGender3 = Top3[Top3.index(",") +1:]
 
     
-    return render_template('index5.html',DATA1=Top1Gender,DATA2 = PercentOfGender)
+    return render_template('index5.html',DATA1=Top1Gender,DATA2 = PercentOfGender1,DATA3=Top2Gender,DATA4 = PercentOfGender2,DATA5=Top3Gender,DATA6 = PercentOfGender3)
 
 
 
