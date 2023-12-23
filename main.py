@@ -142,17 +142,3 @@ def MoviesF():
 def RuntimeF():
     return Runtime
 
-TotalWatchTime = AllTime() #Renvoie temps en heures
-LongestWatchedTime = LongestWatch()
-LongestWatchedMovie = Movies[Runtime.index(str(LongestWatchedTime))]
-DataGenders = StatGENDER()
-Top3Directors = TopDirectors(MostWatchedDirector())
-Top3Genders = TopGenders(StatGENDER())
-topReleaseDateData = topReleaseDate(ReleaseDateStats())
-
-print(TotalWatchTime)
-print(LongestWatchedTime)
-print(LongestWatchedMovie)
-print(Top3Directors)
-print(Top3Genders)
-print(topReleaseDateData)

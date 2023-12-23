@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 from main import AllTime, LongestWatch, StatGENDER, TopDirectors, TopGenders, topReleaseDate,MostWatchedDirector,ReleaseDateStats, NbFilmVu, MoviesF, RuntimeF
-
+import re
 
 
 
@@ -37,8 +37,30 @@ def index4():
 
 @app.route('/nextpage3.html', methods=['GET'])
 def index5():
+
+    pattern = r"'(.*?)'"
+
+    DataGenders = StatGENDER()
+    Top3Genders = TopGenders(StatGENDER())
+    Top1 = Top3Genders[0]
+    Top1 = str(Top1)
+    Top1 = Top1.replace("(","")
+    Top1 = Top1.replace(")","")
+    match = re.search(pattern, Top1)
+    extracted_text = match.group(1)
+    Top1Gender = extracted_text
+    PercentOfGender = Top1[Top1.index(",") +1:]
+
+
+
+    Top2 = Top3Genders[1]
+    Top2 = str(Top2)
+
+    Top3 = Top3Genders[2]
+    Top2 = str(Top2)
+
     
-    return render_template('index5.html',DATA=)
+    return render_template('index5.html',DATA1=Top1Gender,DATA2 = PercentOfGender)
 
 
 
