@@ -7,11 +7,7 @@ import re
 app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
-    
-    
-    DataGenders = StatGENDER()
     Top3Directors = TopDirectors(MostWatchedDirector())
-    Top3Genders = TopGenders(StatGENDER())
     topReleaseDateData = topReleaseDate(ReleaseDateStats())
     Nbfilms = NbFilmVu()
     
