@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import csv
 
 def getdata(urllocal):
     r = requests.get(urllocal)
@@ -57,4 +58,12 @@ def getdirector(data):
     else:
         return "ERROR"
 
-print(getgenders(getdata("https://boxd.it/55bA6L")))
+def getruntime(data):
+    soup = BeautifulSoup(data, 'html.parser')
+
+    pattern = re.compile(r'runTime:\s*(\d+)')
+    match = pattern.search(data)
+    runtime_value = match.group(1)
+
+    return runtime_value
+print(getruntime(getdata("https://boxd.it/55bA7p")))
