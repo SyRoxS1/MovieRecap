@@ -1,8 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-
-def getgenders(urllocal):
+def getdata(urllocal):
     r = requests.get(urllocal)
 
     data = r.text
@@ -20,6 +19,11 @@ def getgenders(urllocal):
     r2 = requests.get(url)
 
     data = r2.text
+
+    return data
+
+def getgenders(data):
+    
     soup = BeautifulSoup(data, 'html.parser')
     genders = soup.find('script', {'type': 'application/ld+json'})
 
@@ -33,4 +37,5 @@ def getgenders(urllocal):
         return genres
     else:
         return "ERROR"
+
 
