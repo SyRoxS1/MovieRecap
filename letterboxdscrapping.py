@@ -66,4 +66,3 @@ def getruntime(data):
     runtime_value = match.group(1)
 
     return runtime_value
-print(getruntime(getdata("https://boxd.it/55bA7p")))
