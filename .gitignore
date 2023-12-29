@@ -1,6 +1,6 @@
 *.csv
 .~lock*
 *.txt
-test.py
 *.pyc
 *.psd
+test*

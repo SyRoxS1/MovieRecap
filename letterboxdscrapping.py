@@ -20,12 +20,17 @@ class MovieDataProcessor:
                 next(FileContent)  # Supprime la première ligne car pas de films présents dessus
                 
                 for row in FileContent:
-                    if row[0][:4] == '2023': #only get data from movies watched in 2023
+                    if row[7][:4] == '2023': #only get data from movies watched in 2023
                         self.Movies.append(row[1])
                         self.ReleaseDates.append(row[2])
                         self.letterboxdURI.append(row[3])
 
-    def getdata(urllocal):
+    def ReturnAllMovieLetterbox(self):
+        return self.Movies
+    def ReturnAllURILetterbox(self):
+        return self.letterboxdURI
+
+    def getdata(self, urllocal):
         r = requests.get(urllocal)
 
         data = r.text
@@ -46,7 +51,7 @@ class MovieDataProcessor:
 
         return data
 
-    def getgenders(data):
+    def getgenders(self, data):
 
         soup = BeautifulSoup(data, 'html.parser')
 
@@ -63,7 +68,7 @@ class MovieDataProcessor:
         else:
             return "ERROR"
 
-    def getdirector(data):
+    def getdirector(self, data):
         soup = BeautifulSoup(data, 'html.parser')
 
         jsondata = soup.find('script', {'type': 'application/ld+json'})
@@ -80,7 +85,7 @@ class MovieDataProcessor:
         else:
             return "ERROR"
 
-    def getruntime(data):
+    def getruntime(self, data):
         soup = BeautifulSoup(data, 'html.parser')
 
         pattern = re.compile(r'runTime:\s*(\d+)')
