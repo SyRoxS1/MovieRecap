@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Platforms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .choice-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .choice-button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .choice-button.imdb {
+            background-color: #f5c518;
+        }
+
+        .choice-button.letterboxd {
+            background-color: #00d474;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Choose a Movie Platform</h1>
+    <p>Select your preferred movie platform:</p>
+
+    <div class="choice-container">
+        <button class="choice-button imdb" onclick="redirectToIMDb()">IMDb</button>
+        <button class="choice-button letterboxd" onclick="redirectToLetter()">Letterboxd</button>
+    </div>
+</div>
+
+<script>
+    function redirectToIMDb() {
+        // Redirect to the IMDb page
+        window.location.href = "/imdb";
+    }
+    function redirectToLetter() {
+        // Redirect to the IMDb page
+        window.location.href = "/letterboxd";
+    }
+</script>
+
+</body>
+</html>

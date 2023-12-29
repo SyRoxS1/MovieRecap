@@ -1,11 +1,46 @@
 from flask import Flask, request, render_template
 from main import  MovieDataProcessor
 import re
+import os
+import random
+import secrets
+import hashlib
 
+def generate_random_md5():
+    # Generate a random value
+    random_value = secrets.token_bytes(16)  # 16 bytes for a 128-bit value
 
-    
+    # Calculate the MD5 hash
+    md5_hash = hashlib.md5(random_value).hexdigest()
+
+    return md5_hash
+
 app = Flask(__name__)
-@app.route('/', methods=['GET'])
+
+@app.route('/',methods=['GET'])
+def indexchoice():
+    return render_template('choice.html')
+
+@app.route('/test',methods=['GET'])
+def test():
+    return render_template('uploadimdb.html')
+
+@app.route('/upload',methods=['POST'])
+def uploadimbd():
+    if 'file' not in request.files:
+        return 'No file part'
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return 'No selected file'
+
+    randomname = generate_random_md5()
+    file.save("files/"+randomname+".csv")
+
+    return 'File successfully uploaded'
+
+@app.route('/imdb', methods=['GET'])
 def index():
     movie_processor = MovieDataProcessor()
     movie_processor.readCSV("WATCHLIST.csv")
