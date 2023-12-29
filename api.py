@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session
+from flask import Flask, request, render_template, session, redirect
 from main import  MovieDataProcessor
 import re
 import os
@@ -22,11 +22,11 @@ app.secret_key = 'your_secret_key'
 def indexchoice():
     return render_template('choice.html')
 
-@app.route('/test',methods=['GET'])
+@app.route('/imbdupload',methods=['GET'])
 def test():
     return render_template('uploadimdb.html')
 
-@app.route('/upload',methods=['POST'])
+@app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():
     if 'file' not in request.files:
         return 'No file part'
@@ -39,17 +39,20 @@ def uploadimbd():
     folder = generate_random_md5()
     filename = generate_random_md5()
     os.makedirs("files/"+folder)
-    file.save("files/"+folder+"/"+filename+".csv")
     path = "files/" + folder + "/" + filename +".csv"
-    print("path :: ",path)
     session['session_user'] = path
+    file.save(path)
+    
 
-    return 'File successfully uploaded'
+    return redirect("/imdb")
 
 @app.route('/imdb', methods=['GET'])
 def index():
     
     path = session.get('session_user', 'Default Value')
+    if path == "Default Value":
+        return redirect('/')
+    
     movie_processor = MovieDataProcessor()
     movie_processor.readCSV(path)
     movie_processor.topReleaseDateData = movie_processor.topReleaseDate(movie_processor.ReleaseDateStats())
@@ -135,7 +138,8 @@ def index6():
     movie_processor.readCSV(path)
     pattern = r"'(.*?)'"
 
-    Top3Directors = movie_processor.StatGENDER(movie_processor.MostWatchedDirector())
+    Top3Directors = movie_processor.TopGenders(movie_processor.MostWatchedDirector())
+    print(Top3Directors)
 
     Top1 = Top3Directors[0]
     Top1 = str(Top1)
