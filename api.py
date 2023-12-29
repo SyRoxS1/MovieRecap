@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 from main import  MovieDataProcessor
 import re
 import os
@@ -16,6 +16,7 @@ def generate_random_md5():
     return md5_hash
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 
 @app.route('/',methods=['GET'])
 def indexchoice():
@@ -35,32 +36,42 @@ def uploadimbd():
     if file.filename == '':
         return 'No selected file'
 
-    randomname = generate_random_md5()
-    file.save("files/"+randomname+".csv")
+    folder = generate_random_md5()
+    filename = generate_random_md5()
+    os.makedirs("files/"+folder)
+    file.save("files/"+folder+"/"+filename+".csv")
+    path = "files/" + folder + "/" + filename +".csv"
+    print("path :: ",path)
+    session['session_user'] = path
 
     return 'File successfully uploaded'
 
 @app.route('/imdb', methods=['GET'])
 def index():
+    
+    path = session.get('session_user', 'Default Value')
     movie_processor = MovieDataProcessor()
-    movie_processor.readCSV("WATCHLIST.csv")
+    movie_processor.readCSV(path)
     movie_processor.topReleaseDateData = movie_processor.topReleaseDate(movie_processor.ReleaseDateStats())
     Nbfilms = movie_processor.NbFilmVu()
-    
+
     return render_template('index.html',DATA=Nbfilms,)
+    
 
 @app.route('/nextpage.html', methods=['GET'])
 def index2():
+    path = session.get('session_user', 'Default Value')
     movie_processor = MovieDataProcessor()
-    movie_processor.readCSV("WATCHLIST.csv")
+    movie_processor.readCSV(path)
     TotalWatchTime = movie_processor.AllTime() #Renvoie temps en heures
     
     return render_template('index2.html',DATA=str(TotalWatchTime) +"H")
 
 @app.route('/nextpage1.html', methods=['GET'])
 def index3():
+    path = session.get('session_user', 'Default Value')
     movie_processor = MovieDataProcessor()
-    movie_processor.readCSV("WATCHLIST.csv")
+    movie_processor.readCSV(path)
     Movies = movie_processor.MoviesF()
     Runtime = movie_processor.RuntimeF()
     movie_processor.LongestWatchedTime = movie_processor.LongestWatch()
@@ -69,15 +80,17 @@ def index3():
 
 @app.route('/nextpage2.html', methods=['GET'])
 def index4():
+    path = session.get('session_user', 'Default Value')
     movie_processor = MovieDataProcessor()
-    movie_processor.readCSV("WATCHLIST.csv")
+    movie_processor.readCSV(path)
     movie_processor.LongestWatchedTime = movie_processor.LongestWatch()
     return render_template('index4.html',DATA=str(movie_processor.LongestWatchedTime) +" minutes !!")
 
 @app.route('/nextpage3.html', methods=['GET'])
 def index5():
+    path = session.get('session_user', 'Default Value')
     movie_processor = MovieDataProcessor()
-    movie_processor.readCSV("WATCHLIST.csv")
+    movie_processor.readCSV(path)
 
     pattern = r"'(.*?)'"
 
@@ -117,8 +130,9 @@ def index5():
 
 @app.route('/nextpage4.html', methods=['GET'])
 def index6():
+    path = session.get('session_user', 'Default Value')
     movie_processor = MovieDataProcessor()
-    movie_processor.readCSV("WATCHLIST.csv")
+    movie_processor.readCSV(path)
     pattern = r"'(.*?)'"
 
     Top3Directors = movie_processor.StatGENDER(movie_processor.MostWatchedDirector())

@@ -28,10 +28,7 @@ class MovieDataProcessor:
                     self.ReleaseDates.append(row[13])
                     self.Runtime.append(row[9])
                     self.Directors.append(row[14])
-            print(self.Genres[0])
             
-            for genre in self.Genres:
-                print(genre)
 
     def LongestWatch(self): 
         Total = 0 
