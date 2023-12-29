@@ -23,8 +23,33 @@ def indexchoice():
     return render_template('choice.html')
 
 @app.route('/imbdupload',methods=['GET'])
-def test():
+def imbdupload():
     return render_template('uploadimdb.html')
+
+@app.route('/letterupload',methods=['GET'])
+def letterupload():
+    return render_template('uploadletter.html')
+
+@app.route('/uploadfromletter',methods=['POST'])
+def uploadletter():
+    if 'file' not in request.files:
+        return 'No file part'
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return 'No selected file'
+
+    folder = generate_random_md5()
+    filename = generate_random_md5()
+    os.makedirs("files/"+folder)
+    path = "files/" + folder + "/" + filename +".csv"
+    session['session_user'] = path
+    session['type'] = "letterboxd"
+    file.save(path)
+    
+
+    return redirect("/letterboxd")
 
 @app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():
@@ -41,6 +66,7 @@ def uploadimbd():
     os.makedirs("files/"+folder)
     path = "files/" + folder + "/" + filename +".csv"
     session['session_user'] = path
+    session['type'] = "imdb"
     file.save(path)
     
 
@@ -48,6 +74,8 @@ def uploadimbd():
 
 @app.route('/imdb', methods=['GET'])
 def index():
+    if session.get('type', 'Default Value') != "imdb":
+        return redirect('/')
     
     path = session.get('session_user', 'Default Value')
     if path == "Default Value":
