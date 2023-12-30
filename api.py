@@ -1,10 +1,13 @@
 from flask import Flask, request, render_template, session, redirect
 from main import  MovieDataProcessor
+from letterboxdscrapping import MovieDataProcessorLetter
+from all_genders_letterbxd import MovieDataProcessorLetterboxdAll
 import re
 import os
 import random
 import secrets
 import hashlib
+
 
 def generate_random_md5():
     # Generate a random value
@@ -51,6 +54,46 @@ def uploadletter():
 
     return redirect("/letterboxd")
 
+@app.route('/letterboxd',methods=['GET'])
+def letterboxd1():
+    if session.get('type', 'Default Value') != "letterboxd":
+        return redirect('/')
+    
+    path = session.get('session_user', 'Default Value')
+    if path == "Default Value":
+        return redirect('/')
+    
+    DataProcessor = MovieDataProcessorLetter()
+    DataProcessor.readCSV(path)
+    AllMovies = DataProcessor.ReturnAllMovieLetterbox()
+    NbFilms = len(AllMovies)
+    return render_template('index_letter.html',DATA=NbFilms)
+
+@app.route('/letterboxdnext.html',methods=['GET'])
+def letterboxd2():
+    if session.get('type', 'Default Value') != "letterboxd":
+        return redirect('/')
+    
+    path = session.get('session_user', 'Default Value')
+    if path == "Default Value":
+        return redirect('/')
+    
+    DataProcessor = MovieDataProcessorLetter()
+    DataAllProcessor = MovieDataProcessorLetterboxdAll()
+    
+    Runtime = DataAllProcessor.allruntimes(path)
+    print(Runtime)
+    Total = 0
+    for R in Runtime:
+        Total += R
+    Total = Total / 60
+
+    return render_template('index2_letter.html',DATA=str(Total) +"H")
+
+@app.route('/letterboxdnext2.html',methods=['GET'])
+def letterboxd3():
+    return 0
+
 @app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():
     if 'file' not in request.files:
@@ -86,7 +129,7 @@ def index():
     movie_processor.topReleaseDateData = movie_processor.topReleaseDate(movie_processor.ReleaseDateStats())
     Nbfilms = movie_processor.NbFilmVu()
 
-    return render_template('index.html',DATA=Nbfilms,)
+    return render_template('index.html',DATA=Nbfilms)
     
 
 @app.route('/nextpage.html', methods=['GET'])

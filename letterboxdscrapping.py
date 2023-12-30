@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import csv
-class MovieDataProcessor:
+class MovieDataProcessorLetter:
     def __init__(self):
         self.DateOfInsertInList = []
         self.ReleaseDates = [] 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static',filename='styles/styles.css') }}" />
+  <link rel="stylesheet" href="style.css" />
+  <head>
+    <title>incroyable</title>
+  </head>
+  <body>
+    <div class="titleimg">
+      <img src="{{ url_for('static',filename='styles/src/title.png') }}" alt="title">
+    </div>
+    
+    <p class="infos">Nombre de films vus cette année :</p>
+    
+    <div class="container">
+      <div class="slide-elem">
+        <p class="DATA">{% if DATA %} {{ DATA }} {% endif %}</p>
+      </div>
+
+      <a href="letterboxdnext.html" class="button">
+        Voir le temps passé sur ces films
+      </a>
+    </div>
+
+    <script src="{{ url_for('static',filename='styles/script.js') }}"></script>
+  </body>
+</html>
