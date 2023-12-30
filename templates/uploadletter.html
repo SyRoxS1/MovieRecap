@@ -28,6 +28,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         label {
@@ -56,15 +57,49 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <h2>Mettre la liste LETTERBOXD</h2>
-    <form action="http://127.0.0.1:4444/uploadfromletter" method="post" enctype="multipart/form-data">
+    <form action="http://127.0.0.1:4444/uploadfromletter" method="post" enctype="multipart/form-data" onsubmit="showLoader()">
         <label for="file">Choose a file:</label>
         <input type="file" name="file" id="file" accept=".csv">
         <br>
+        <div class="loading">
+            <div class="loader" id="loader"></div>
+        </div>
         <input type="submit" value="Upload">
     </form>
+
+    <script>
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+    </script>
 </body>
 </html>

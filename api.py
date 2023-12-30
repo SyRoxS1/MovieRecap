@@ -52,6 +52,22 @@ def uploadletter():
     file.save(path)
     
 
+    return redirect("/letterboxd_load")
+
+@app.route('/letterboxd_load',methods=['GET'])
+def letterboxd0():
+    if session.get('type', 'Default Value') != "letterboxd":
+        return redirect('/')
+    
+    path = session.get('session_user', 'Default Value')
+    if path == "Default Value":
+        return redirect('/')
+    
+    DataAllProcessor = MovieDataProcessorLetterboxdAll()
+    Runtime = DataAllProcessor.allruntimes(path)
+    Genders = DataAllProcessor.allgenders(path)
+    session['Runtime'] = Runtime
+    session['Genders'] = Genders
     return redirect("/letterboxd")
 
 @app.route('/letterboxd',methods=['GET'])
@@ -78,10 +94,12 @@ def letterboxd2():
     if path == "Default Value":
         return redirect('/')
     
-    DataProcessor = MovieDataProcessorLetter()
-    DataAllProcessor = MovieDataProcessorLetterboxdAll()
+
     
-    Runtime = DataAllProcessor.allruntimes(path)
+    Runtime = session.get('Runtime','Default Value')
+    if Runtime == 'Default Value':
+        return redirect('/')
+    
     print(Runtime)
     Total = 0
     for R in Runtime:
@@ -92,7 +110,20 @@ def letterboxd2():
 
 @app.route('/letterboxdnext2.html',methods=['GET'])
 def letterboxd3():
-    return 0
+    if session.get('type', 'Default Value') != "letterboxd":
+        return redirect('/')
+    
+    path = session.get('session_user', 'Default Value')
+    if path == "Default Value":
+        return redirect('/')
+    
+
+    
+    Runtime = session.get('Runtime','Default Value')
+    if Runtime == 'Default Value':
+        return redirect('/')
+    
+    
 
 @app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():

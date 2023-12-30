@@ -89,3 +89,5 @@ class MovieDataProcessorLetterboxdAll:
             runtimes.append(int(result_queue.get()))
        
         return runtimes
+    
+    
