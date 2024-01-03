@@ -64,10 +64,12 @@ def letterboxd0():
         return redirect('/')
     
     DataAllProcessor = MovieDataProcessorLetterboxdAll()
-    Runtime = DataAllProcessor.allruntimes(path)
+    Runtime_Names = DataAllProcessor.allruntimes(path)
+    
     Genders = DataAllProcessor.allgenders(path)
-    session['Runtime'] = Runtime
+    session['Runtime_Names'] = Runtime_Names
     session['Genders'] = Genders
+    
     return redirect("/letterboxd")
 
 @app.route('/letterboxd',methods=['GET'])
@@ -96,17 +98,16 @@ def letterboxd2():
     
 
     
-    Runtime = session.get('Runtime','Default Value')
-    if Runtime == 'Default Value':
+    Runtime_Names = session.get('Runtime_Names','Default Value')
+    if Runtime_Names == 'Default Value':
         return redirect('/')
     
-    print(Runtime)
-    Total = 0
-    for R in Runtime:
-        Total += R
-    Total = Total / 60
+    print(Runtime_Names)
 
-    return render_template('index2_letter.html',DATA=str(Total) +"H")
+    total_duration = sum(Runtime_Names.values())
+    total_duration = total_duration / 60
+    total_duration = round(total_duration, 2)
+    return render_template('index2_letter.html',DATA=str(total_duration) +"H")
 
 @app.route('/letterboxdnext2.html',methods=['GET'])
 def letterboxd3():
@@ -119,11 +120,11 @@ def letterboxd3():
     
 
     
-    Runtime = session.get('Runtime','Default Value')
-    if Runtime == 'Default Value':
+    Runtime_Names = session.get('Runtime_Names','Default Value')
+    if Runtime_Names == 'Default Value':
         return redirect('/')
     
-    
+    return render_template('index3_letter.html',DATA="test")
 
 @app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():

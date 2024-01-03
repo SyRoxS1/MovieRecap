@@ -2,7 +2,10 @@ from letterboxdscrapping import MovieDataProcessorLetter
 import threading
 from queue import Queue
 import time
-
+"""
+Most of this is outdated since i'm not getting the data from the letterbxd website anymore
+I am now using my own API
+"""
 class MovieDataProcessorLetterboxdAll:
     def allgenders(self,file):
         DataProcessor = MovieDataProcessorLetter()
@@ -84,10 +87,11 @@ class MovieDataProcessorLetterboxdAll:
         for thread in threads:
             thread.join()
 
-        runtimes = []
+        runtimes_with_names = {}
         while not result_queue.empty():
-            runtimes.append(int(result_queue.get()))
+            data = result_queue.get()
+            runtimes_with_names.update({data[0][0]: int(data[0][1])})
        
-        return runtimes
+        return runtimes_with_names
     
     

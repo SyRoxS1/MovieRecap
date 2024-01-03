@@ -2,6 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import csv
+"""
+Most of the function here are now useless :
+getdata() used to redirect the uri url from the csv (cf letterboxd csv) to the actual website page
+getgenders() wich gather the genders from some javascript code that was on the website is now useless since my API sends it (faster)
+getruntime() same as getgenders()
+getdirector() i may have forgotten to add the director to my API...
+"""
+
 class MovieDataProcessorLetter:
     def __init__(self):
         self.DateOfInsertInList = []
@@ -12,6 +20,7 @@ class MovieDataProcessorLetter:
         self.Movies = []
         self.letterboxdURI = []
         self.count = 0
+        
         
 
     def readCSV(self, path):
@@ -30,7 +39,7 @@ class MovieDataProcessorLetter:
     def ReturnAllURILetterbox(self):
         return self.letterboxdURI
 
-    def getdata(self, urllocal):
+    def getdata(self, urllocal): #NOT USEFULL ANYMORE give a uri and respond with the text of the actual url of the movie (https://boxd.it/55bA6B -> https://letterboxd.com/film/godzilla-2014/)
         r = requests.get(urllocal)
 
         data = r.text
@@ -49,6 +58,11 @@ class MovieDataProcessorLetter:
 
         data = r2.text
 
+        return data
+
+    def EasyGetData(self, url): #GET DATA FROM MY API at https://movieapi.syroxs.online
+        r = requests.get(url)
+        data = r.text
         return data
 
     def getgenders(self, data):
@@ -86,12 +100,15 @@ class MovieDataProcessorLetter:
             return "ERROR"
 
     def getruntime(self, data):
+        self.NameWithRuntime = []
         soup = BeautifulSoup(data, 'html.parser')
 
         pattern = re.compile(r'runTime:\s*(\d+)')
+        Name = re.search(r'name:\s*"([^"]+)"', data)
+        extracted_name = Name.group(1) if Name else None
         match = pattern.search(data)
+        
         runtime_value = match.group(1)
+        self.NameWithRuntime.append([extracted_name, runtime_value])
+        return self.NameWithRuntime
 
-        return runtime_value
-
-    
