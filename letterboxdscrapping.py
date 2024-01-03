@@ -38,7 +38,47 @@ class MovieDataProcessorLetter:
         return self.Movies
     def ReturnAllURILetterbox(self):
         return self.letterboxdURI
+    
+    def EasyGetData(self, url): #GET DATA FROM MY API at https://movieapi.syroxs.online
+        r = requests.get(url)
+        data = r.text
+        return data
+    
+    def getdirector(self, data):
+        soup = BeautifulSoup(data, 'html.parser')
 
+        jsondata = soup.find('script', {'type': 'application/ld+json'})
+        jsondata = str(jsondata)
+
+        pattern = re.compile(r'"director":\s*\[([^\]]*)\]')
+        match = pattern.search(jsondata)
+        if match:
+            director_content = match.group(1)
+            # Split the content into a list of genres
+            director = re.findall(r'"([^"]*)"', director_content)
+            director_name = re.findall(r'"name":\s*"([^"]*)"', director_content)
+            return director_name
+        else:
+            return "ERROR"
+    """
+    def getgenders(self, data):
+
+        soup = BeautifulSoup(data, 'html.parser')
+
+        jsondata = soup.find('script', {'type': 'application/ld+json'})
+        jsondata = str(jsondata)
+
+        pattern = re.compile(r'"genre":\s*\[([^\]]*)\]')
+        match = pattern.search(jsondata)
+        if match:
+            genre_content = match.group(1)
+            # Split the content into a list of genres
+            genres = re.findall(r'"([^"]*)"', genre_content)
+            return genres
+        else:
+            return "ERROR"
+    """
+    """
     def getdata(self, urllocal): #NOT USEFULL ANYMORE give a uri and respond with the text of the actual url of the movie (https://boxd.it/55bA6B -> https://letterboxd.com/film/godzilla-2014/)
         r = requests.get(urllocal)
 
@@ -59,46 +99,9 @@ class MovieDataProcessorLetter:
         data = r2.text
 
         return data
-
-    def EasyGetData(self, url): #GET DATA FROM MY API at https://movieapi.syroxs.online
-        r = requests.get(url)
-        data = r.text
-        return data
-
-    def getgenders(self, data):
-
-        soup = BeautifulSoup(data, 'html.parser')
-
-        jsondata = soup.find('script', {'type': 'application/ld+json'})
-        jsondata = str(jsondata)
-
-        pattern = re.compile(r'"genre":\s*\[([^\]]*)\]')
-        match = pattern.search(jsondata)
-        if match:
-            genre_content = match.group(1)
-            # Split the content into a list of genres
-            genres = re.findall(r'"([^"]*)"', genre_content)
-            return genres
-        else:
-            return "ERROR"
-
-    def getdirector(self, data):
-        soup = BeautifulSoup(data, 'html.parser')
-
-        jsondata = soup.find('script', {'type': 'application/ld+json'})
-        jsondata = str(jsondata)
-
-        pattern = re.compile(r'"director":\s*\[([^\]]*)\]')
-        match = pattern.search(jsondata)
-        if match:
-            director_content = match.group(1)
-            # Split the content into a list of genres
-            director = re.findall(r'"([^"]*)"', director_content)
-            director_name = re.findall(r'"name":\s*"([^"]*)"', director_content)
-            return director_name
-        else:
-            return "ERROR"
-
+    """
+    
+    """
     def getruntime(self, data):
         self.NameWithRuntime = []
         soup = BeautifulSoup(data, 'html.parser')
@@ -112,3 +115,4 @@ class MovieDataProcessorLetter:
         self.NameWithRuntime.append([extracted_name, runtime_value])
         return self.NameWithRuntime
 
+    """
