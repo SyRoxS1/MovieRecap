@@ -183,6 +183,77 @@ def letterboxd4():
 
     return render_template('index4_letter.html',DATA=length_max)
 
+@app.route('/letterboxdnext4.html',methods=['GET'])
+def letterboxd5():
+    if session.get('type', 'Default Value') != "letterboxd":
+        return redirect('/')
+    
+    path = session.get('session_user', 'Default Value')
+    if path == "Default Value":
+        return redirect('/')
+    
+    Datas = session.get('Datas','Default Value')
+    if Datas == 'Default Value':
+        return redirect('/')
+    
+    
+    names = []
+    runtimes = []
+    Genders = []
+    Release_Years = []
+    
+    
+    for i in range(len(Datas)):
+        names.append(Datas[i][1])
+        runtimes.append(int(Datas[i][2]))
+        Genders.append(Datas[i][3])
+        Release_Years.append(Datas[i][4].replace("\n",""))
+    all_genders = []
+    for Gender in Genders:
+        for Unique in Gender.split(" "):
+            Unique = Unique.replace('"',"")
+            all_genders.append(Unique)
+            
+    
+    index_science = all_genders.index("Science")
+    index_fiction = all_genders.index("Fiction")
+
+    
+    all_genders[index_science:index_fiction + 1] = [' '.join(all_genders[index_science:index_fiction + 1])] # Combine "Science" and "Fiction" into "Science Fiction"
+
+    DataProcessor = MovieDataProcessorLetter()
+    stat = DataProcessor.StatGENDER(all_genders)
+    Top3Genders = DataProcessor.TopGenders(stat)
+    pattern = r"'(.*?)'"
+    Top1 = Top3Genders[0]
+    Top1 = str(Top1)
+    Top1 = Top1.replace("(","")
+    Top1 = Top1.replace(")","")
+    match = re.search(pattern, Top1)
+    extracted_text = match.group(1)
+    Top1Gender = extracted_text
+    PercentOfGender1 = Top1[Top1.index(",") +1:]
+    
+    Top2 = Top3Genders[1]
+    Top2 = str(Top2)
+    Top2 = Top2.replace("(","")
+    Top2 = Top2.replace(")","")
+    match = re.search(pattern, Top2)
+    extracted_text = match.group(1)
+    Top2Gender = extracted_text
+    PercentOfGender2 = Top2[Top2.index(",") +1:]
+
+    Top3 = Top3Genders[2]
+    Top3 = str(Top3)
+    Top3 = Top3.replace("(","")
+    Top3 = Top3.replace(")","")
+    match = re.search(pattern, Top3)
+    extracted_text = match.group(1)
+    Top3Gender = extracted_text
+    PercentOfGender3 = Top3[Top3.index(",") +1:]
+
+    return render_template('index5_letter.html',DATA1=Top1Gender,DATA2 = PercentOfGender1,DATA3=Top2Gender,DATA4 = PercentOfGender2,DATA5=Top3Gender,DATA6 = PercentOfGender3)
+
 @app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():
     if 'file' not in request.files:

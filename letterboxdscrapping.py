@@ -66,6 +66,30 @@ class MovieDataProcessorLetter:
             return director_name
         else:
             return "ERROR"
+        
+    def StatGENDER(self, Genres): #Return percentgenders with all genders with the percentage of how much it is present in the whole list
+        
+        
+        AllDifferentGenders = set(Genres)
+
+        PercentGenders = {}
+
+        for Gender in AllDifferentGenders:
+            val = round(Genres.count(Gender)/len(Genres)*100,2)
+            PercentGenders.update({Gender: val})
+        return PercentGenders
+    
+    def TopGenders(self, PercentGenders):
+        count = 0
+        Top = []
+        for Data in sorted(PercentGenders, key=PercentGenders.get, reverse=True):
+            Top.append((Data, PercentGenders[Data]))
+            count += 1
+            if count == 3:
+                break
+        return Top
+    
+    
     """
     def getgenders(self, data):
 

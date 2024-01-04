@@ -12,15 +12,17 @@
       <img src="{{ url_for('static',filename='styles/src/title.png') }}" alt="title">
     </div>
     
-    <p class="infos">Pour une durée de  :</p>
+    <p class="infos">Genres préférés :</p>
     
     <div class="container">
       <div class="slide-elem">
-        <p class="DATA">{% if DATA %} {{ DATA }} {% endif %} minutes !!</p>
+        <p class="DATA"> {{ DATA1 }} avec {{ DATA2 }} % des films vus </p>
+        <p class="DATA"> {{ DATA3 }} avec {{ DATA4 }} % des films vus </p>
+        <p class="DATA"> {{ DATA5 }} avec {{ DATA6 }} % des films vus </p>
       </div>
 
-      <a href="letterboxdnext4.html" class="button">
-        Voir les genres préférés
+      <a href="letterboxdnext5.html" class="button">
+        Voir les réalisateurs préférés
       </a>
     </div>
 
