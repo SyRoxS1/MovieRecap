@@ -72,7 +72,7 @@ def letterboxd0():
     
     return redirect("/letterboxd")
 
-@app.route('/letterboxd',methods=['GET'])
+@app.route('/letterboxd',methods=['GET']) #Number of movies watched
 def letterboxd1():
     if session.get('type', 'Default Value') != "letterboxd":
         return redirect('/')
@@ -87,7 +87,7 @@ def letterboxd1():
     NbFilms = len(AllMovies)
     return render_template('index_letter.html',DATA=NbFilms)
 
-@app.route('/letterboxdnext.html',methods=['GET'])
+@app.route('/letterboxdnext.html',methods=['GET']) #Total watch time
 def letterboxd2():
     if session.get('type', 'Default Value') != "letterboxd":
         return redirect('/')
@@ -120,7 +120,7 @@ def letterboxd2():
     total_duration = round(total_duration, 2)
     return render_template('index2_letter.html',DATA=str(total_duration) +"H")
 
-@app.route('/letterboxdnext2.html',methods=['GET'])
+@app.route('/letterboxdnext2.html',methods=['GET']) #longest movie
 def letterboxd3():
     if session.get('type', 'Default Value') != "letterboxd":
         return redirect('/')
@@ -152,7 +152,7 @@ def letterboxd3():
     return render_template('index3_letter.html',DATA=longest_movie)
 
 
-@app.route('/letterboxdnext3.html',methods=['GET'])
+@app.route('/letterboxdnext3.html',methods=['GET']) #top length
 def letterboxd4():
     if session.get('type', 'Default Value') != "letterboxd":
         return redirect('/')
@@ -183,7 +183,7 @@ def letterboxd4():
 
     return render_template('index4_letter.html',DATA=length_max)
 
-@app.route('/letterboxdnext4.html',methods=['GET'])
+@app.route('/letterboxdnext4.html',methods=['GET']) #top genders
 def letterboxd5():
     if session.get('type', 'Default Value') != "letterboxd":
         return redirect('/')
