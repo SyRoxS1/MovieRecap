@@ -7,6 +7,24 @@ Most of this is outdated since i'm not getting the data from the letterbxd websi
 I am now using my own API
 """
 class MovieDataProcessorLetterboxdAll:
+    def scanAPI(self, file):
+        DataProcessor = MovieDataProcessorLetter()
+        DataProcessor.readCSV(file)
+        movies_names = DataProcessor.ReturnAllMovieLetterbox()
+        Tout = []
+        count = 0
+        for movie in movies_names:
+            movie = movie.replace("'","")
+            data = DataProcessor.GetDataFromMyAPI(movie)
+            data = data.replace("[","")
+            data = data.replace("]","")
+            data = data.split(",")
+            Tout.append(data)
+            count += 1
+            if count == 20:
+                break
+        return Tout
+    """
     def allgenders(self,file):
         DataProcessor = MovieDataProcessorLetter()
 
@@ -94,4 +112,4 @@ class MovieDataProcessorLetterboxdAll:
        
         return runtimes_with_names
     
-    
+    """

@@ -64,11 +64,11 @@ def letterboxd0():
         return redirect('/')
     
     DataAllProcessor = MovieDataProcessorLetterboxdAll()
-    Runtime_Names = DataAllProcessor.allruntimes(path)
     
-    Genders = DataAllProcessor.allgenders(path)
-    session['Runtime_Names'] = Runtime_Names
-    session['Genders'] = Genders
+    
+    Datas = DataAllProcessor.scanAPI(path) #Retrieve data from my API (name, runtime, Genders,release date,)
+    session['Datas'] = Datas
+    
     
     return redirect("/letterboxd")
 
@@ -98,13 +98,24 @@ def letterboxd2():
     
 
     
-    Runtime_Names = session.get('Runtime_Names','Default Value')
-    if Runtime_Names == 'Default Value':
+    Datas = session.get('Datas','Default Value')
+    if Datas == 'Default Value':
         return redirect('/')
     
-    print(Runtime_Names)
-
-    total_duration = sum(Runtime_Names.values())
+    
+    names = []
+    runtimes = []
+    Genders = []
+    Release_Years = []
+    
+    
+    for i in range(len(Datas)):
+        names.append(Datas[i][1])
+        runtimes.append(int(Datas[i][2]))
+        Genders.append(Datas[i][3])
+        Release_Years.append(Datas[i][4].replace("\n",""))
+    
+    total_duration = sum(runtimes)
     total_duration = total_duration / 60
     total_duration = round(total_duration, 2)
     return render_template('index2_letter.html',DATA=str(total_duration) +"H")
@@ -118,13 +129,59 @@ def letterboxd3():
     if path == "Default Value":
         return redirect('/')
     
-
-    
-    Runtime_Names = session.get('Runtime_Names','Default Value')
-    if Runtime_Names == 'Default Value':
+    Datas = session.get('Datas','Default Value')
+    if Datas == 'Default Value':
         return redirect('/')
     
-    return render_template('index3_letter.html',DATA="test")
+    
+    names = []
+    runtimes = []
+    Genders = []
+    Release_Years = []
+    
+    
+    for i in range(len(Datas)):
+        names.append(Datas[i][1])
+        runtimes.append(int(Datas[i][2]))
+        Genders.append(Datas[i][3])
+        Release_Years.append(Datas[i][4].replace("\n",""))
+
+    max_where = runtimes.index(max(runtimes))
+    longest_movie = names[max_where] 
+
+    return render_template('index3_letter.html',DATA=longest_movie)
+
+
+@app.route('/letterboxdnext3.html',methods=['GET'])
+def letterboxd4():
+    if session.get('type', 'Default Value') != "letterboxd":
+        return redirect('/')
+    
+    path = session.get('session_user', 'Default Value')
+    if path == "Default Value":
+        return redirect('/')
+    
+    Datas = session.get('Datas','Default Value')
+    if Datas == 'Default Value':
+        return redirect('/')
+    
+    
+    names = []
+    runtimes = []
+    Genders = []
+    Release_Years = []
+    
+    
+    for i in range(len(Datas)):
+        names.append(Datas[i][1])
+        runtimes.append(int(Datas[i][2]))
+        Genders.append(Datas[i][3])
+        Release_Years.append(Datas[i][4].replace("\n",""))
+
+    max_where = runtimes.index(max(runtimes))
+    length_max = runtimes[max_where]
+
+    return render_template('index4_letter.html',DATA=length_max)
 
 @app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():

@@ -36,13 +36,19 @@ class MovieDataProcessorLetter:
 
     def ReturnAllMovieLetterbox(self):
         return self.Movies
+    
+    
+    
     def ReturnAllURILetterbox(self):
         return self.letterboxdURI
     
-    def EasyGetData(self, url): #GET DATA FROM MY API at https://movieapi.syroxs.online
+    def GetDataFromMyAPI(self, MovieName): #GET DATA FROM MY API at https://movieapi.syroxs.online
+        url= "https://movieapi.syroxs.online/" + MovieName
         r = requests.get(url)
         data = r.text
         return data
+    
+    
     
     def getdirector(self, data):
         soup = BeautifulSoup(data, 'html.parser')
