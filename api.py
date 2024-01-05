@@ -254,6 +254,46 @@ def letterboxd5():
 
     return render_template('index5_letter.html',DATA1=Top1Gender,DATA2 = PercentOfGender1,DATA3=Top2Gender,DATA4 = PercentOfGender2,DATA5=Top3Gender,DATA6 = PercentOfGender3)
 
+@app.route('/letterboxdnext5.html',methods=['GET']) #top length
+def letterboxd6():
+    if session.get('type', 'Default Value') != "letterboxd":
+        return redirect('/')
+    
+    path = session.get('session_user', 'Default Value')
+    if path == "Default Value":
+        return redirect('/')
+    
+    Datas = session.get('Datas','Default Value')
+    if Datas == 'Default Value':
+        return redirect('/')
+    
+    
+    names = []
+    runtimes = []
+    Genders = []
+    Release_Years = []
+    Directors = []
+    
+    for i in range(len(Datas)):
+        if len(Datas[i]) > 6:
+            DirectorsTemp = (Datas[i][5:])
+            for Director in DirectorsTemp:
+                Directors.append(Director.replace('"',"").replace("\n",""))
+        else:
+            Directors.append(Datas[i][5].replace('"',"").replace("\n",""))
+       
+        names.append(Datas[i][1])
+        runtimes.append(int(Datas[i][2]))
+        Genders.append(Datas[i][3])
+        Release_Years.append(Datas[i][4].replace("\n",""))
+        
+        
+    
+    print(Directors)
+    
+
+    return render_template('index6_letter.html',DATA="1")
+
 @app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():
     if 'file' not in request.files:

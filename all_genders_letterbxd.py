@@ -11,18 +11,37 @@ class MovieDataProcessorLetterboxdAll:
         DataProcessor = MovieDataProcessorLetter()
         DataProcessor.readCSV(file)
         movies_names = DataProcessor.ReturnAllMovieLetterbox()
+        release_year = DataProcessor.ReturnAllReleasesLetterbox()
+        print(release_year)
         Tout = []
         count = 0
         for movie in movies_names:
             movie = movie.replace("'","")
             data = DataProcessor.GetDataFromMyAPI(movie)
-            data = data.replace("[","")
-            data = data.replace("]","")
-            data = data.split(",")
-            Tout.append(data)
+            listmaybe = eval(data)
+            
+            if len(listmaybe) > 1:
+                for i in range(len(listmaybe)):
+                    print("more than 2 film, checking if year",release_year[count],"is the same as",listmaybe[i][4])
+                    if int(release_year[count]) == int(listmaybe[i][4]):
+                        data = listmaybe[i]
+                        data = str(data)
+                        data = data.replace("[","")
+                        data = data.replace("]","")
+                        data = data.split(",")
+                        Tout.append(data)
+                        break
+            else:
+                data = data.replace("[","")
+                data = data.replace("]","")
+                data = data.split(",")
+                Tout.append(data)
+            
+            
             count += 1
-            if count == 20:
+            if count == 40:
                 break
+        print(Tout)
         return Tout
     """
     def allgenders(self,file):

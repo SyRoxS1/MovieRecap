@@ -21,7 +21,7 @@ def generate_sql_script(movie_data):
 
     return full_sql_script
 
-with open('D:/leo from old pc/programmation/python/MovieRecap/buildingmyapi/movies_length.txt', 'r', encoding='utf-8', errors='ignore') as file:
+with open('directors.txt', 'r', encoding='utf-8', errors='ignore') as file:
     for line in file:
         data = line
         data = data.replace("[","")

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static',filename='styles/styles.css') }}" />
+  <link rel="stylesheet" href="style.css" />
+  <head>
+    <title>incroyable</title>
+  </head>
+  <body>
+    <div class="titleimg">
+      <img src="{{ url_for('static',filename='styles/src/title.png') }}" alt="title">
+    </div>
+    
+    <p class="infos">Réalisateurs préférés :</p>
+    
+    <div class="container">
+      <div class="slide-elem">
+        <p class="DATA"> {{ DATA1 }} avec {{ DATA2 }} % des films vus </p>
+        <p class="DATA"> {{ DATA3 }} avec {{ DATA4 }} % des films vus </p>
+        <p class="DATA"> {{ DATA5 }} avec {{ DATA6 }} % des films vus </p>
+      </div>
+
+      <a href="letterboxdnext6.html" class="button">
+        Voir les réalisateurs préférés
+      </a>
+    </div>
+
+    <script src="{{ url_for('static',filename='styles/script.js') }}"></script>
+  </body>
+</html>
