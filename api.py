@@ -19,6 +19,11 @@ def generate_random_md5():
 
     return md5_hash
 
+def ReadDataSaved(file):
+    with open(file,"r",encoding="utf8") as ok:
+        Oui = ok.readlines()
+    return Oui
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
@@ -68,7 +73,10 @@ def letterboxd0():
     
     
     Datas = DataAllProcessor.scanAPI(path) #Retrieve data from my API (name, runtime, Genders,release date,)
-    session['Datas'] = Datas
+    file = path.replace("/","").replace(".csv","")
+    with open(file,"w",encoding="utf8") as ok:
+        ok.write(Datas)
+    
     
     
     return redirect("/letterboxd")
@@ -97,11 +105,9 @@ def letterboxd2():
     if path == "Default Value":
         return redirect('/')
     
-
+    file = path.replace("/","").replace(".csv","")
+    Datas = ReadDataSaved(path)
     
-    Datas = session.get('Datas','Default Value')
-    if Datas == 'Default Value':
-        return redirect('/')
     
     
     names = []
@@ -130,9 +136,8 @@ def letterboxd3():
     if path == "Default Value":
         return redirect('/')
     
-    Datas = session.get('Datas','Default Value')
-    if Datas == 'Default Value':
-        return redirect('/')
+    file = path.replace("/","").replace(".csv","")
+    Datas = ReadDataSaved(path)
     
     
     names = []
@@ -162,9 +167,8 @@ def letterboxd4():
     if path == "Default Value":
         return redirect('/')
     
-    Datas = session.get('Datas','Default Value')
-    if Datas == 'Default Value':
-        return redirect('/')
+    file = path.replace("/","").replace(".csv","")
+    Datas = ReadDataSaved(path)
     
     
     names = []
@@ -193,9 +197,8 @@ def letterboxd5():
     if path == "Default Value":
         return redirect('/')
     
-    Datas = session.get('Datas','Default Value')
-    if Datas == 'Default Value':
-        return redirect('/')
+    file = path.replace("/","").replace(".csv","")
+    Datas = ReadDataSaved(path)
     
     
     names = []
@@ -264,9 +267,8 @@ def letterboxd6():
     if path == "Default Value":
         return redirect('/')
     
-    Datas = session.get('Datas','Default Value')
-    if Datas == 'Default Value':
-        return redirect('/')
+    file = path.replace("/","").replace(".csv","")
+    Datas = ReadDataSaved(path)
     
     
     names = []
