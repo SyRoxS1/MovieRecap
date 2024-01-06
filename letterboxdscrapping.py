@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import csv
+from collections import Counter
+
 """
 Most of the function here are now useless :
 getdata() used to redirect the uri url from the csv (cf letterboxd csv) to the actual website page
@@ -96,6 +98,24 @@ class MovieDataProcessorLetter:
                 break
         return Top
     
+    def TopDirectors(self, Directors):
+        Top = {}
+        director_counts = Counter(Directors)
+
+        # Step 2: Calculate the percentage of each director's appearances
+        total_directors = len(Directors)
+        director_percentages = {director: (count / total_directors) * 100 for director, count in director_counts.items()}
+
+        # Step 3: Create a dictionary with director names as keys and their percentage as values
+        director_percentage_dict = dict(sorted(director_percentages.items(), key=lambda x: x[1], reverse=True))
+
+        # Step 4: Sort the dictionary based on the percentage in descending order
+        sorted_director_percentage_dict = dict(sorted(director_percentage_dict.items(), key=lambda x: x[1], reverse=True))
+
+        # Print the result
+        for director, percentage in sorted_director_percentage_dict.items():
+            Top.update({director: percentage})
+        return Top
     
     """
     def getgenders(self, data):

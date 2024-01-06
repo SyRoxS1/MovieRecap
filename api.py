@@ -9,6 +9,7 @@ import secrets
 import hashlib
 
 
+
 def generate_random_md5():
     # Generate a random value
     random_value = secrets.token_bytes(16)  # 16 bytes for a 128-bit value
@@ -287,12 +288,30 @@ def letterboxd6():
         Genders.append(Datas[i][3])
         Release_Years.append(Datas[i][4].replace("\n",""))
         
-        
+    ProcessorLetter = MovieDataProcessorLetter()
+    TopDirectors = ProcessorLetter.TopDirectors(Directors)
+
+    first_key = list(TopDirectors.keys())[0]
+    first_value = TopDirectors[first_key]
+    first_value = round(first_value, 2)
+    print(first_key,first_value)
     
-    print(Directors)
+    second_key = list(TopDirectors.keys())[1]
+    second_value = TopDirectors[second_key]
+    second_value = round(second_value, 2)
+    print(second_key,second_value)
+
+    third_key = list(TopDirectors.keys())[2]
+    third_value = TopDirectors[third_key]
+    third_value = round(third_value, 2)
+    print(third_key,third_value)
     
 
-    return render_template('index6_letter.html',DATA="1")
+    return render_template('index6_letter.html',DATA1=first_key,DATA2 = first_value,DATA3=second_key,DATA4 = second_value,DATA5=third_key,DATA6 = third_value)
+
+    
+
+    
 
 @app.route('/uploadfromimdb',methods=['POST'])
 def uploadimbd():
