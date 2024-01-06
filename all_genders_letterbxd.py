@@ -21,9 +21,9 @@ class MovieDataProcessorLetterboxdAll:
             listmaybe = eval(data)
             
             if len(listmaybe) > 1:
-                for i in range(len(listmaybe)):
-                    print("more than 2 film, checking if year",release_year[count],"is the same as",listmaybe[i][4])
-                    if int(release_year[count]) == int(listmaybe[i][4]):
+                for i in range(len(listmaybe)): #if 2 movies have same names
+                    
+                    if int(release_year[count]) == int(listmaybe[i][4]): #check wich is the good year
                         data = listmaybe[i]
                         data = str(data)
                         data = data.replace("[","")
@@ -39,9 +39,8 @@ class MovieDataProcessorLetterboxdAll:
             
             
             count += 1
-            if count == 40:
-                break
-        print(Tout)
+            
+        
         return Tout
     """
     def allgenders(self,file):
