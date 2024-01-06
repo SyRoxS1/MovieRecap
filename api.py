@@ -463,4 +463,4 @@ def index6():
     return render_template('index6.html',DATA1=Top1Director,DATA2 = PercentOfDirector1,DATA3=Top2Director,DATA4 = PercentOfDirector2,DATA5=Top3Director,DATA6 = PercentOfDirector3)
 
 if __name__ == '__main__':
-    app.run("127.0.0.1", debug=True,port=4444)
+    app.run("127.0.0.1", debug=True,port=6666)
