@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import re
 import csv
 from collections import Counter
-
+import time
 """
 Most of the function here are now useless :
 getdata() used to redirect the uri url from the csv (cf letterboxd csv) to the actual website page
@@ -31,6 +31,7 @@ class MovieDataProcessorLetter:
                 next(FileContent)  # Supprime la première ligne car pas de films présents dessus
                 
                 for row in FileContent:
+                    print(row[7][:4])
                     if row[7][:4] == '2023': #only get data from movies watched in 2023
                         self.Movies.append(row[1])
                         self.ReleaseDates.append(row[2])
@@ -47,9 +48,20 @@ class MovieDataProcessorLetter:
     
     def GetDataFromMyAPI(self, MovieName): #GET DATA FROM MY API at https://movieapi.syroxs.online
         url= "https://movieapi.syroxs.online/" + MovieName
-        r = requests.get(url)
-        data = r.text
-        return data
+        max_attempts = 10
+        attempts = 0
+        while attempts < max_attempts:
+            try:
+                r = requests.get(url)
+                data = r.text
+                return data
+            except:
+                time.sleep(0.1)
+                attempts += 1
+        return('ERROR')
+
+
+        
     
     
     
@@ -80,7 +92,7 @@ class MovieDataProcessorLetter:
         
         
         AllDifferentGenders = set(Genres)
-
+        
         PercentGenders = {}
 
         for Gender in AllDifferentGenders:

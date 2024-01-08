@@ -7,6 +7,7 @@ import os
 import random
 import secrets
 import hashlib
+import json
 
 
 
@@ -21,7 +22,7 @@ def generate_random_md5():
 
 def ReadDataSaved(file):
     with open(file,"r",encoding="utf8") as ok:
-        Oui = ok.readlines()
+        Oui = json.load(ok)
     return Oui
 
 app = Flask(__name__)
@@ -75,7 +76,7 @@ def letterboxd0():
     Datas = DataAllProcessor.scanAPI(path) #Retrieve data from my API (name, runtime, Genders,release date,)
     file = path.replace("/","").replace(".csv","")
     with open(file,"w",encoding="utf8") as ok:
-        ok.write(Datas)
+        json.dump(str(Datas),ok)
     
     
     
@@ -106,7 +107,11 @@ def letterboxd2():
         return redirect('/')
     
     file = path.replace("/","").replace(".csv","")
-    Datas = ReadDataSaved(path)
+    Datas = ReadDataSaved(file)
+    
+    
+    Datas = eval(str(Datas[1:-1]))
+    
     
     
     
@@ -117,11 +122,14 @@ def letterboxd2():
     
     
     for i in range(len(Datas)):
-        names.append(Datas[i][1])
+        names.append(Datas[i][1].replace("'",""))
         runtimes.append(int(Datas[i][2]))
         Genders.append(Datas[i][3])
         Release_Years.append(Datas[i][4].replace("\n",""))
     
+
+    
+
     total_duration = sum(runtimes)
     total_duration = total_duration / 60
     total_duration = round(total_duration, 2)
@@ -137,7 +145,11 @@ def letterboxd3():
         return redirect('/')
     
     file = path.replace("/","").replace(".csv","")
-    Datas = ReadDataSaved(path)
+    Datas = ReadDataSaved(file)
+    
+    Datas = eval(str(Datas))
+    
+    
     
     
     names = []
@@ -147,7 +159,7 @@ def letterboxd3():
     
     
     for i in range(len(Datas)):
-        names.append(Datas[i][1])
+        names.append(Datas[i][1].replace("'",""))
         runtimes.append(int(Datas[i][2]))
         Genders.append(Datas[i][3])
         Release_Years.append(Datas[i][4].replace("\n",""))
@@ -168,7 +180,10 @@ def letterboxd4():
         return redirect('/')
     
     file = path.replace("/","").replace(".csv","")
-    Datas = ReadDataSaved(path)
+    Datas = ReadDataSaved(file)
+    Datas = eval(str(Datas[1:-1]))
+    
+    
     
     
     names = []
@@ -178,7 +193,7 @@ def letterboxd4():
     
     
     for i in range(len(Datas)):
-        names.append(Datas[i][1])
+        names.append(Datas[i][1].replace("'",""))
         runtimes.append(int(Datas[i][2]))
         Genders.append(Datas[i][3])
         Release_Years.append(Datas[i][4].replace("\n",""))
@@ -198,7 +213,10 @@ def letterboxd5():
         return redirect('/')
     
     file = path.replace("/","").replace(".csv","")
-    Datas = ReadDataSaved(path)
+    Datas = ReadDataSaved(file)
+    Datas = eval(str(Datas[1:-1]))
+    
+    
     
     
     names = []
@@ -208,7 +226,7 @@ def letterboxd5():
     
     
     for i in range(len(Datas)):
-        names.append(Datas[i][1])
+        names.append(Datas[i][1].replace("'",""))
         runtimes.append(int(Datas[i][2]))
         Genders.append(Datas[i][3])
         Release_Years.append(Datas[i][4].replace("\n",""))
@@ -268,7 +286,9 @@ def letterboxd6():
         return redirect('/')
     
     file = path.replace("/","").replace(".csv","")
-    Datas = ReadDataSaved(path)
+    Datas = ReadDataSaved(file)
+    Datas = str(Datas)
+    Datas = eval(Datas)
     
     
     names = []
@@ -280,16 +300,28 @@ def letterboxd6():
     for i in range(len(Datas)):
         if len(Datas[i]) > 6:
             DirectorsTemp = (Datas[i][5:])
+            
             for Director in DirectorsTemp:
-                Directors.append(Director.replace('"',"").replace("\n",""))
+                if Director[0] == " ":
+                    
+                    Director = Director[1:]
+                    
+                Directors.append(Director.replace('"',"").replace("\n","").replace("'",""))
         else:
-            Directors.append(Datas[i][5].replace('"',"").replace("\n",""))
+            
+            if Datas[i][5][0] == " ":
+                    Datas[i][5] = Datas[i][5][1:]
+
+            
+            Directors.append(Datas[i][5].replace('"',"").replace("\n","").replace("'",""))
        
-        names.append(Datas[i][1])
+        names.append(Datas[i][1].replace("'",""))
         runtimes.append(int(Datas[i][2]))
         Genders.append(Datas[i][3])
         Release_Years.append(Datas[i][4].replace("\n",""))
         
+    test = []
+    
     ProcessorLetter = MovieDataProcessorLetter()
     TopDirectors = ProcessorLetter.TopDirectors(Directors)
 
@@ -388,7 +420,7 @@ def index5():
     movie_processor.readCSV(path)
 
     pattern = r"'(.*?)'"
-
+    
     DataGenders = movie_processor.StatGENDER()
     Top3Genders = movie_processor.TopGenders(movie_processor.StatGENDER())
     Top1 = Top3Genders[0]
@@ -429,9 +461,9 @@ def index6():
     movie_processor = MovieDataProcessor()
     movie_processor.readCSV(path)
     pattern = r"'(.*?)'"
-
+    
     Top3Directors = movie_processor.TopGenders(movie_processor.MostWatchedDirector())
-    print(Top3Directors)
+    
 
     Top1 = Top3Directors[0]
     Top1 = str(Top1)
@@ -465,4 +497,4 @@ def index6():
     return render_template('index6.html',DATA1=Top1Director,DATA2 = PercentOfDirector1,DATA3=Top2Director,DATA4 = PercentOfDirector2,DATA5=Top3Director,DATA6 = PercentOfDirector3)
 
 if __name__ == '__main__':
-    app.run("127.0.0.1", debug=True,port=6666)
+    app.run("127.0.0.1", debug=True,port=4444)

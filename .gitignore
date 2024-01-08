@@ -7,3 +7,4 @@ test*
 files/*
 scrip_sql.sql
 buildingmyapi/directoradd_sql.sql
+files*

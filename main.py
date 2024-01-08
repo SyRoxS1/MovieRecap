@@ -50,15 +50,26 @@ class MovieDataProcessor:
 
 
     def StatGENDER(self): #Return percentgenders with all genders with the percentage of how much it is present in the whole list
-        GenderSeparated = []
+        GenderSeparated = [] 
+        
         for EnumerationOfGenres in self.Genres:
-            GenderSeparated = GenderSeparated + EnumerationOfGenres.split(",")
+            if "," in EnumerationOfGenres:
+                temp = EnumerationOfGenres.split(",")
+                for things in temp:
+                    if things[0] == " ": 
+                        things = things[1:]
+                    GenderSeparated.append(things)
+
+            else:
+                GenderSeparated.append(EnumerationOfGenres)
+
+        
         AllDifferentGenders = set(GenderSeparated)
 
         PercentGenders = {}
 
         for Gender in AllDifferentGenders:
-            val = round(self.Genres.count(Gender)/len(self.Genres)*100,2)
+            val = round(GenderSeparated.count(Gender)/len(GenderSeparated)*100,2)
             PercentGenders.update({Gender: val})
         return PercentGenders
 
@@ -92,7 +103,6 @@ class MovieDataProcessor:
     def MostWatchedDirector(self):
         UniqueDirectors = set(self.Directors)
         PercentDirector = {}
-
         for Director in UniqueDirectors:
             val = round(self.Directors.count(Director)/len(self.Directors)*100,2)
             PercentDirector.update({Director: val})
