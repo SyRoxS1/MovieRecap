@@ -10,6 +10,7 @@ On letterboxd :
 First go to settings :
 ![image](https://github.com/SyRoxS1/MovieRecap/assets/114361806/db5d96a5-033d-4d92-bb04-57c988869aeb)
 
+
 Then on the data tab and click export your data :
 
 ![image](https://github.com/SyRoxS1/MovieRecap/assets/114361806/e5576604-6735-4fe4-9cb4-824b8442d4db)
