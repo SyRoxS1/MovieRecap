@@ -33,3 +33,6 @@ It will download a file named WATCHLIST.csv wich you can directly upload to the 
 
 
 Note that IMDB are much faster because they store all the movies data inside the file and for the letterboxd i have to retrive the data for my api I created for this project.
+
+
+Most of the "interesting" part is in WebSiteClient.py wich is the main part of the program, I plan on adding more stats and improve the design but I've spent so much time on this and want to go do something else
