@@ -21,13 +21,16 @@ class MovieDataProcessor:
 
             for row in FileContent:
                 if row[3][:4] == '2023': #only get data from movies watched in 2023
-                    self.Movies.append(row[5])
-                    self.Genres.append(row[11])
-                    self.DateOfInsertInList.append(row[3])
-                    self.Rating.append(row[8])
-                    self.ReleaseDates.append(row[13])
-                    self.Runtime.append(row[9])
-                    self.Directors.append(row[14])
+                    if row[9] == "": #eviter les séries qui n'ont pas de runtime
+                        print("")
+                    else:
+                        self.Movies.append(row[5])
+                        self.Genres.append(row[11])
+                        self.DateOfInsertInList.append(row[3])
+                        self.Rating.append(row[8])
+                        self.ReleaseDates.append(row[13])
+                        self.Runtime.append(row[9])
+                        self.Directors.append(row[14])
             
 
     def LongestWatch(self): 
