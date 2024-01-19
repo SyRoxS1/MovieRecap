@@ -1,3 +1,6 @@
+[![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/SyRoxS1/MovieRecap/blob/master/README.md)
+[![fr](https://img.shields.io/badge/lang-fr-red.svg)](https://github.com/SyRoxS1/MovieRecap/blob/master/README.fr.md)
+
 Site web hébergé à l'adresse https://movierecap.syroxs.online
 
 Il prend en charge les listes stockées sur IMdB et Letterboxd :
