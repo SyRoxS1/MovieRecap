@@ -2,7 +2,7 @@ from letterboxscarping import MovieDataProcessorLetter
 import re
 from bs4 import BeautifulSoup
 from check_if_movie_already_in_api import check_if_movie_already_in_api
-
+from insert_into_dtb_movies import insert_into_dtb_movies
 
 
 
@@ -72,7 +72,8 @@ for film in toutlesfilms:
         name = runtime_and_name[0][0]
         runtime = runtime_and_name[0][1]
 
-        if check_if_movie_already_in_api(name, film):
+
+        if check_if_movie_already_in_api(name, film_url_clean):
             print(f"The movie {name} is already in the API.")
             continue
 
@@ -85,13 +86,8 @@ for film in toutlesfilms:
         
 
         runtime_and_name = getruntimeandName(text)
-        genders = getgenders(text)
+        genders = str(getgenders(text)).replace('[','').replace(']','').replace('\'','')
         releaseyear = getreleaseYear(text)
         director =  str(Processor.getdirector(self="",data=text)).replace('[','').replace(']','').replace('\'','')
-        print("Film number:", count)
-        print("Film name:", name)
-        print("Runtime:", runtime)
-        print("Release year:", releaseyear)
-        print('director:',director)
-        print('film_url:',film_url_clean)
 
+        insert_into_dtb_movies(name, runtime, genders,releaseyear, director,film_url_clean)
