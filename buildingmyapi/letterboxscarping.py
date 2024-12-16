@@ -64,12 +64,12 @@ class MovieDataProcessorLetter:
             # Split the content into a list of genres
             Name = re.search(r'name:\s*"([^"]+)"', data)
             extracted_name = Name.group(1) if Name else None
-            director_name.append(extracted_name)
+            
 
-            director_name.append(re.findall(r'"name":\s*"([^"]*)"', director_content))
+            extracted_name= (re.findall(r'"name":\s*"([^"]*)"', director_content))
 
 
-            return director_name
+            return extracted_name
         else:
             return "ERROR"
 

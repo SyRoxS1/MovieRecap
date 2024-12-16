@@ -60,16 +60,20 @@ def jsp(film):
 
 count = 0
 for film in toutlesfilms:
-      Processor = MovieDataProcessorLetter
-      count += 1
+        Processor = MovieDataProcessorLetter
+        count += 1
 
-      filmoui = film.replace('\n','')
+        filmoui = film.replace('\n','')
 
-      text = jsp(filmoui)
+        text = jsp(filmoui)
 
-      lesdatas = getruntime(text)
-      lesdatas2 = getgenders(text)
-      releaseyear = getreleaseYear(text)
-      director =  Processor.getdirector(self="",data=text)
-      with open('movies_length.txt', 'a') as file:
-        file.write(' '.join(map(str, lesdatas)) + "," +' '.join(map(str, lesdatas2)) + ","+ releaseyear +","+ str(director) + "\n")
+        runtime = getruntime(text)
+        genders = getgenders(text)
+        releaseyear = getreleaseYear(text)
+        director =  str(Processor.getdirector(self="",data=text)).replace('[','').replace(']','').replace('\'','')
+        print("Film number:", count)
+        print("Film name:", runtime[0][0])
+        print("Runtime:", runtime[0][1])
+        print("Release year:", releaseyear)
+        print('director:',director)
+
