@@ -64,8 +64,8 @@ count = 0
 
 for film in toutlesfilms:
         
-        film_clean = film.replace('\n','')
-        text = Get_Text(film_clean)
+        film_url_clean = film.replace('\n','')
+        text = Get_Text(film_url_clean)
         
 
         runtime_and_name = getruntimeandName(text)
@@ -80,7 +80,7 @@ for film in toutlesfilms:
         Processor = MovieDataProcessorLetter
         count += 1
 
-        film_clean = film.replace('\n','')
+        film_url_clean = film.replace('\n','')
 
         
 
@@ -93,4 +93,5 @@ for film in toutlesfilms:
         print("Runtime:", runtime)
         print("Release year:", releaseyear)
         print('director:',director)
+        print('film_url:',film_url_clean)
 
