@@ -2,7 +2,7 @@ import mysql.connector
 
 
 
-def check_if_movie_already_in_api(movie_id, letterbox_url):
+def insert_into_dtb_movies(name, runtime, genre,release_year, scenarist,letterbox_url):
     with open('password.txt', 'r') as file:
         password = file.read()
     connection = mysql.connector.connect(
@@ -12,11 +12,11 @@ def check_if_movie_already_in_api(movie_id, letterbox_url):
         database='movies'
     )
     cursor = connection.cursor()
-    cursor.execute(f"") 
-    result = cursor.fetchall()
+    cursor.execute(f"INSERT INTO MoviesInfos (name, length_minutes, genre, release_year, scenarist, ltrbx_url) VALUES ('{name}','{runtime}','{genre}','{release_year}','{scenarist}','{letterbox_url}')") 
+    connection.commit()
+    cursor.close()  
 
-    if len(result) > 0:
-        return True
-    else:
-        return False
+    
+
+
 
