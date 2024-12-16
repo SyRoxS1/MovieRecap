@@ -6,11 +6,16 @@ with open('password.txt', 'r') as file:
 def check_if_movie_already_in_api(movie_id, letterbox_url):
     connection = mysql.connector.connect(
         host='localhost',
-        user='syroxs',
+        user='root',
         password=password,
         database='movies'
     )
     cursor = connection.cursor()
-    cursor.execute(f"SELECT * FROM movies WHERE name LIKE {movie_id} and ltrbx_url LIKE {letterbox_url}") 
+    cursor.execute(f"SELECT * FROM MoviesInfos WHERE name LIKE '{movie_id}' and ltrbx_url LIKE '{letterbox_url}'") 
     result = cursor.fetchall()
-    return result
+
+    if len(result) > 0:
+        return True
+    else:
+        return False
+
