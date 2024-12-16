@@ -8,7 +8,6 @@ with open("film_urls.txt","r") as f:
 
 
 def getruntime(data):
-        print("data : ",data)
         NameWithRuntime = []
         soup = BeautifulSoup(data, 'html.parser')
 
