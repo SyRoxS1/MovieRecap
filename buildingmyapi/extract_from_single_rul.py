@@ -63,6 +63,15 @@ with open("film_urls.txt","r") as f:
 count = 0
 
 for film in toutlesfilms:
+        runtime_and_name = getruntimeandName(text)
+        name = runtime_and_name[0][0]
+        runtime = runtime_and_name[0][1]
+
+        if check_if_movie_already_in_api(name, film):
+            print(f"The movie {name} is already in the API.")
+            continue
+
+
         Processor = MovieDataProcessorLetter
         count += 1
 
@@ -75,8 +84,8 @@ for film in toutlesfilms:
         releaseyear = getreleaseYear(text)
         director =  str(Processor.getdirector(self="",data=text)).replace('[','').replace(']','').replace('\'','')
         print("Film number:", count)
-        print("Film name:", runtime_and_name[0][0])
-        print("Runtime:", runtime_and_name[0][1])
+        print("Film name:", name)
+        print("Runtime:", runtime)
         print("Release year:", releaseyear)
         print('director:',director)
 
