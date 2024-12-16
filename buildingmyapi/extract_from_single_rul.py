@@ -1,13 +1,12 @@
 from letterboxscarping import MovieDataProcessorLetter
 import re
 from bs4 import BeautifulSoup
+from check_if_movie_already_in_api import check_if_movie_already_in_api
 
 
-with open("film_urls.txt","r") as f:
-      toutlesfilms = f.readlines()
 
 
-def getruntime(data):
+def getruntimeandName(data):
         NameWithRuntime = []
         soup = BeautifulSoup(data, 'html.parser')
 
@@ -52,28 +51,32 @@ def getreleaseYear(data):
     with open("film_urls.txt","r") as f:
           toutlesfilms = f.readlines()
 
-def jsp(film):
+def Get_Text(film):
     Processor = MovieDataProcessorLetter
     fullurl = "https://letterboxd.com" + film
     text = Processor.EasyGetData(self="",Url=fullurl)
     return text
 
+
+with open("film_urls.txt","r") as f:
+      toutlesfilms = f.readlines()
 count = 0
+
 for film in toutlesfilms:
         Processor = MovieDataProcessorLetter
         count += 1
 
-        filmoui = film.replace('\n','')
+        film_clean = film.replace('\n','')
 
-        text = jsp(filmoui)
+        text = Get_Text(film_clean)
 
-        runtime = getruntime(text)
+        runtime_and_name = getruntimeandName(text)
         genders = getgenders(text)
         releaseyear = getreleaseYear(text)
         director =  str(Processor.getdirector(self="",data=text)).replace('[','').replace(']','').replace('\'','')
         print("Film number:", count)
-        print("Film name:", runtime[0][0])
-        print("Runtime:", runtime[0][1])
+        print("Film name:", runtime_and_name[0][0])
+        print("Runtime:", runtime_and_name[0][1])
         print("Release year:", releaseyear)
         print('director:',director)
 
