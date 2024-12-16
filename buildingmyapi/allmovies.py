@@ -4,11 +4,11 @@ import requests
 """
 gather all movies from a letterboxd list wich contains 20k movies (then added to a database for my api)
 """
-with open("allmoveis.txt","r") as f:
-    urls = f.readlines()
+#with open("allmoveis.txt","r") as f:
+#    urls = f.readlines()
 
 def readhhtml(html):
-    
+    print("parsing : " + html)
     soup = BeautifulSoup(html, 'html.parser')
 
     film_urls = []
@@ -31,10 +31,8 @@ def gethtml(url):
     html = r.text  
     return html
 
-count = 0
+
 
 url = "https://letterboxd.com/annwilson50/list/all-movies/"
-count += 1
-data = gethtml(url)
-print(count)
-readhhtml(data)
+html = gethtml(url)
+readhhtml(html)
