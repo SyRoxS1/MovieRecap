@@ -63,6 +63,11 @@ with open("film_urls.txt","r") as f:
 count = 0
 
 for film in toutlesfilms:
+        
+        film_clean = film.replace('\n','')
+        text = Get_Text(film_clean)
+        
+
         runtime_and_name = getruntimeandName(text)
         name = runtime_and_name[0][0]
         runtime = runtime_and_name[0][1]
@@ -77,7 +82,7 @@ for film in toutlesfilms:
 
         film_clean = film.replace('\n','')
 
-        text = Get_Text(film_clean)
+        
 
         runtime_and_name = getruntimeandName(text)
         genders = getgenders(text)
