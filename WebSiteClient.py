@@ -122,10 +122,16 @@ def letterboxd2():
     
     
     for i in range(len(Datas)):
-        names.append(Datas[i][1].replace("'",""))
-        runtimes.append(int(Datas[i][2]))
-        Genders.append(Datas[i][3])
-        Release_Years.append(Datas[i][4].replace("\n",""))
+        if len(Datas[i]) == 1:
+            continue
+        else:
+            try:
+                names.append(Datas[i][1].replace("'",""))
+            except:
+                print(Datas[i],len(Datas[i]))
+            runtimes.append(int(Datas[i][2]))
+            Genders.append(Datas[i][3])
+            Release_Years.append(Datas[i][4].replace("\n",""))
     
 
     
@@ -159,10 +165,13 @@ def letterboxd3():
     
     
     for i in range(len(Datas)):
-        names.append(Datas[i][1].replace("'",""))
-        runtimes.append(int(Datas[i][2]))
-        Genders.append(Datas[i][3])
-        Release_Years.append(Datas[i][4].replace("\n",""))
+        if len(Datas[i]) == 1:
+            continue
+        else:
+            names.append(Datas[i][1].replace("'",""))
+            runtimes.append(int(Datas[i][2]))
+            Genders.append(Datas[i][3])
+            Release_Years.append(Datas[i][4].replace("\n",""))
 
     max_where = runtimes.index(max(runtimes))
     longest_movie = names[max_where] 
@@ -193,10 +202,13 @@ def letterboxd4():
     
     
     for i in range(len(Datas)):
-        names.append(Datas[i][1].replace("'",""))
-        runtimes.append(int(Datas[i][2]))
-        Genders.append(Datas[i][3])
-        Release_Years.append(Datas[i][4].replace("\n",""))
+        if len(Datas[i]) == 1:
+            continue
+        else:
+            names.append(Datas[i][1].replace("'",""))
+            runtimes.append(int(Datas[i][2]))
+            Genders.append(Datas[i][3])
+            Release_Years.append(Datas[i][4].replace("\n",""))
 
     max_where = runtimes.index(max(runtimes))
     length_max = runtimes[max_where]
@@ -226,10 +238,13 @@ def letterboxd5():
     
     
     for i in range(len(Datas)):
-        names.append(Datas[i][1].replace("'",""))
-        runtimes.append(int(Datas[i][2]))
-        Genders.append(Datas[i][3])
-        Release_Years.append(Datas[i][4].replace("\n",""))
+        if len(Datas[i]) == 1:
+            continue
+        else:
+            names.append(Datas[i][1].replace("'",""))
+            runtimes.append(int(Datas[i][2]))
+            Genders.append(Datas[i][3])
+            Release_Years.append(Datas[i][4].replace("\n",""))
     all_genders = []
     for Gender in Genders:
         for Unique in Gender.split(" "):
@@ -298,28 +313,31 @@ def letterboxd6():
     Directors = []
     
     for i in range(len(Datas)):
-        if len(Datas[i]) > 6:
-            DirectorsTemp = (Datas[i][5:])
-            
-            for Director in DirectorsTemp:
-                if Director[0] == " ":
-                    
-                    Director = Director[1:]
-                    
-                Directors.append(Director.replace('"',"").replace("\n","").replace("'",""))
+        if len(Datas[i]) == 1:
+            continue
         else:
-            
-            if Datas[i][5][0] == " ":
-                    Datas[i][5] = Datas[i][5][1:]
-
-            
-            Directors.append(Datas[i][5].replace('"',"").replace("\n","").replace("'",""))
-       
-        names.append(Datas[i][1].replace("'",""))
-        runtimes.append(int(Datas[i][2]))
-        Genders.append(Datas[i][3])
-        Release_Years.append(Datas[i][4].replace("\n",""))
+            if len(Datas[i]) > 6:
+                DirectorsTemp = (Datas[i][5:])
+                
+                for Director in DirectorsTemp:
+                    if Director[0] == " ":
+                        
+                        Director = Director[1:]
+                        
+                    Directors.append(Director.replace('"',"").replace("\n","").replace("'",""))
+            else:
+                
+                if Datas[i][5][0] == " ":
+                        Datas[i][5] = Datas[i][5][1:]
+    
+                
+                Directors.append(Datas[i][5].replace('"',"").replace("\n","").replace("'",""))
         
+            names.append(Datas[i][1].replace("'",""))
+            runtimes.append(int(Datas[i][2]))
+            Genders.append(Datas[i][3])
+            Release_Years.append(Datas[i][4].replace("\n",""))
+            
     test = []
     
     ProcessorLetter = MovieDataProcessorLetter()

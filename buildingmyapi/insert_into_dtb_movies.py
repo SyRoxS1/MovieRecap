@@ -17,7 +17,7 @@ def insert_into_dtb_movies(name, runtime, genre,release_year, scenarist,letterbo
     except:
         print("ERROR : can't execute:",f"INSERT INTO MoviesInfos (name, length_minutes, genre, release_year, scenarist, ltrbx_url) VALUES ('{name}',{runtime},'{genre}',{release_year},'{scenarist}','{letterbox_url}')")
     
-    
+
     try:
         connection.commit()
     except:
