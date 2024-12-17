@@ -19,11 +19,14 @@ def check_if_movie_already_in_api(name, letterbox_url):
 
     try:
         result = cursor.fetchall()
+        if len(result) > 0:
+            return True
+        else:
+            return False
     except:
         print("Can't fetch")
-        
-    if len(result) > 0:
         return True
-    else:
-        return False
+        
+
+    
 
