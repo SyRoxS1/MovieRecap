@@ -28,11 +28,11 @@ It will download a zip files and the one to upload to the site should be diary.c
 
 For IMdb now:
 
-Go to the list you stored your movies (but not on editor mode) on then scroll all the way down and you should see the buttun export this list at the bottom :
+Go to the list you stored your movies (but not on editor mode) on then scroll all the way down and you should see the option to export this list at the bottom :
 
 ![image](https://github.com/SyRoxS1/MovieRecap/assets/114361806/27539e08-5f85-4ff0-87dc-de3474400d1c)
 
-It will download a file named WATCHLIST.csv wich you can directly upload to the site
+It will download a CSV file wich you can directly upload to the site
 
 
 Note that IMDB are much faster because they store all the movies data inside the file and for the letterboxd i have to retrive the data for my api I created for this project.
