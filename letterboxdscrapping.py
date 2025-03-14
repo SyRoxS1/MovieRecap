@@ -5,6 +5,7 @@ import csv
 from collections import Counter
 import time
 import datetime
+import json
 """
 Most of the function here are now useless :
 getdata() used to redirect the uri url from the csv (cf letterboxd csv) to the actual website page
@@ -65,50 +66,43 @@ class MovieDataProcessorLetter:
         return('ERROR')
 
 """
-    def GetDataFromAPI(self, MovieName):
-        url = "https://api.themoviedb.org/3/search/movie?query="+MovieName+"&include_adult=false&language=en-US&page=1&year=1993"
+    def GetDataFromAPI(self, MovieName, release_year):
+        url = "https://api.themoviedb.org/3/search/movie?query="+MovieName+"&include_adult=false&language=en-US&page=1&year=" + release_year
 
         with open("auth.key","r") as file:
-            key = file.readlines()
+            key = file.readline()
 
         headers = {
             "accept": "application/json",
             "Authorization": f"Bearer {key}"
-    }
+        }
         max_attempts = 10
         attempts = 0
         while attempts < max_attempts:
             try:
                 r = requests.get(url, headers=headers)
-                data = r.text
-                return data
+                data = json.loads(r.text)
+                return data['results'][0]
             except:
                 time.sleep(0.1)
                 attempts += 1
         return('ERROR FETCHING API for movie',MovieName)
     
-    def getdirector(self, data):
-        soup = BeautifulSoup(data, 'html.parser')
+    def getdirector(self, movie_id):
+        url = "https://api.themoviedb.org/3/movie/" + str(movie_id) + "/credits?language=en-US"
+        print(url)
+        with open("auth.key","r") as file:
+            key = file.readline()
 
-        jsondata = soup.find('script', {'type': 'application/ld+json'})
-        jsondata = str(jsondata)
-
-        pattern = re.compile(r'"director":\s*\[([^\]]*)\]')
-        match = pattern.search(jsondata)
-        director_name = []
-        if match:
-            director_content = match.group(1)
-            # Split the content into a list of genres
-            Name = re.search(r'name:\s*"([^"]+)"', data)
-            extracted_name = Name.group(1) if Name else None
-            director_name.append(extracted_name)
-            
-            director_name.append(re.findall(r'"name":\s*"([^"]*)"', director_content))
-
-            
-            return director_name
-        else:
-            return "ERROR"
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {key}"
+        }
+        response = requests.get(url, headers=headers)
+        data = json.loads(response.text)
+        director_names = [i['name'] for i in data['crew'] if i['job'] == 'Director']
+        return director_names
+        
         
     def StatGENDER(self, Genres): #Return percentgenders with all genders with the percentage of how much it is present in the whole list
         
