@@ -4,7 +4,7 @@ from queue import Queue
 import time
 """
 Most of this is outdated since i'm not getting the data from the letterbxd website anymore
-I am now using my own API
+I am now using my own API // this comment looks stupid since it does take the data from my api
 """
 class MovieDataProcessorLetterboxdAll:
     def scanAPI(self, file):
