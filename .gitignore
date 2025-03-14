@@ -9,3 +9,4 @@ scrip_sql.sql
 buildingmyapi/directoradd_sql.sql
 files*
 !film_urls.txt
+*.key

@@ -4,6 +4,7 @@ import re
 import csv
 from collections import Counter
 import time
+import datetime
 """
 Most of the function here are now useless :
 getdata() used to redirect the uri url from the csv (cf letterboxd csv) to the actual website page
@@ -26,13 +27,14 @@ class MovieDataProcessorLetter:
         
 
     def readCSV(self, path):
+            last_year = (int(datetime.datetime.now().year)) - 1
             with open(path, mode="r", encoding="utf8") as OpenFile:
                 FileContent = csv.reader(OpenFile)
                 next(FileContent)  # Supprime la première ligne car pas de films présents dessus
                 
                 for row in FileContent:
                     print(row[7][:4])
-                    if row[7][:4] == '2023': #only get data from movies watched in 2023
+                    if row[7][:4] == str(last_year): #only get data from movies watched in 2023
                         self.Movies.append(row[1])
                         self.ReleaseDates.append(row[2])
                         self.letterboxdURI.append(row[3])
@@ -46,6 +48,8 @@ class MovieDataProcessorLetter:
     def ReturnAllURILetterbox(self):
         return self.letterboxdURI
     
+    # Outdated
+    """
     def GetDataFromMyAPI(self, MovieName): #GET DATA FROM MY API at https://movieapi.syroxs.online
         url= "https://movieapi.syroxs.online/" + MovieName
         max_attempts = 10
@@ -60,10 +64,28 @@ class MovieDataProcessorLetter:
                 attempts += 1
         return('ERROR')
 
+"""
+    def GetDataFromAPI(self, MovieName):
+        url = "https://api.themoviedb.org/3/search/movie?query="+MovieName+"&include_adult=false&language=en-US&page=1&year=1993"
 
-        
-    
-    
+        with open("auth.key","r") as file:
+            key = file.readlines()
+
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {key}"
+    }
+        max_attempts = 10
+        attempts = 0
+        while attempts < max_attempts:
+            try:
+                r = requests.get(url, headers=headers)
+                data = r.text
+                return data
+            except:
+                time.sleep(0.1)
+                attempts += 1
+        return('ERROR FETCHING API for movie',MovieName)
     
     def getdirector(self, data):
         soup = BeautifulSoup(data, 'html.parser')

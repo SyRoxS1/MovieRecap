@@ -58,8 +58,8 @@ def uploadletter():
     session['type'] = "letterboxd"
     file.save(path)
     
-
     return redirect("/letterboxd_load")
+
 
 @app.route('/letterboxd_load',methods=['GET'])
 def letterboxd0():
