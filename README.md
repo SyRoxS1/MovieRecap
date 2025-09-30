@@ -1,7 +1,7 @@
 [![en](https://img.shields.io/badge/lang-en-green.svg)](https://github.com/SyRoxS1/MovieRecap/blob/master/README.md)
 [![fr](https://img.shields.io/badge/lang-fr-red.svg)](https://github.com/SyRoxS1/MovieRecap/blob/master/README.fr.md)
 
-Website hosted at https://movierecap.syroxs.online
+Website no longer hosted, everything is depreciated, I should have used public API instead of my own ( too hard to maintain )
 
 It supports list stored on IMdB and Letterboxd :
 
